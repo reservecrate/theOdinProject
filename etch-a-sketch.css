@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    font-family: 'Baloo Tammudu', sans-serif;
+}
+
+#container-div {
+    display: flex;
+    width: auto;
+    height: auto;
+}
+
+#main-heading {
+    font-size: 50px;
+}
+
+#reset-button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 30px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.cell-element {
+    border: 1px solid blueviolet;
+    height: 50px;
+    width: 50px;
+    vertical-align: center;
+    text-align: center;
+    font-size: 15px;
+}
+
+.touched {
+    background-color: deepskyblue;
+}
+
+.clicked {
+    background-color: lime;
+}
+
+.doubleclicked {
+    background-color: orange;
+}
