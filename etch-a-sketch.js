@@ -35,8 +35,7 @@ createGrid();
 let cells = document.querySelectorAll('.cell-element');
 cells.forEach(cell => {
     cell.addEventListener('mouseenter', () => {
-        cell.clas
-        sList.add('touched');
+        cell.classList.add('touched');
     });
     cell.addEventListener('click',() => {
         cell.classList.toggle('clicked');

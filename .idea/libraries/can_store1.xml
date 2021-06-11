@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="can-store1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/learning-area/javascript/apis/fetching-data/can-store/can-store.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
