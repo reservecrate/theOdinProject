@@ -8,7 +8,7 @@ body {
     background-image: url("https://preview.redd.it/lhaiocosfdv61.png?width=640&crop=smart&auto=webp&s=d014511bc97200d0cef68d4e70e77714a6cb784a");
 }
 
-#display-pane {
+#display-panel {
     border: 2px solid blue;
     border-radius: 50px;
     height: 100px;
@@ -24,21 +24,21 @@ body {
 
 #calculator {
     display: grid;
-    grid-template-areas: "number-7 number-8 number-9 power sqrt"
-                         "number-4 number-5 number-6 multiply divide"
-                         "number-1 number-2 number-3 add subtract"
-                         "number-0 period reverse clear equals";
+    grid-template-areas: "digit-7 digit-8 digit-9 power sqrt"
+                         "digit-4 digit-5 digit-6 multiply divide"
+                         "digit-1 digit-2 digit-3 add subtract"
+                         "digit-0 period reverse clear equals";
     height: 400px;
     width: 800px;
 }
-#number-7 {
-    grid-area: number-7;
+#digit-7 {
+    grid-area: digit-7;
 }
-#number-8 {
-      grid-area: number-8;
+#digit-8 {
+      grid-area: digit-8;
 }
-#number-9 {
-    grid-area: number-9;
+#digit-9 {
+    grid-area: digit-9;
 }
 #power {
     grid-area: power;
@@ -46,14 +46,14 @@ body {
 #sqrt {
     grid-area: sqrt;
 }
-#number-4 {
-    grid-area: number-4;
+#digit-4 {
+    grid-area: digit-4;
 }
-#number-5 {
-    grid-area: number-5;
+#digit-5 {
+    grid-area: digit-5;
 }
-#number-6 {
-    grid-area: number-6;
+#digit-6 {
+    grid-area: digit-6;
 }
 #multiply {
     grid-area: multiply;
@@ -61,14 +61,14 @@ body {
 #divide {
     grid-area: divide;
 }
-#number-1 {
-    grid-area: number-1;
+#digit-1 {
+    grid-area: digit-1;
 }
-#number-2 {
-    grid-area: number-2;
+#digit-2 {
+    grid-area: digit-2;
 }
-#number-3 {
-    grid-area: number-3;
+#digit-3 {
+    grid-area: digit-3;
 }
 #add {
     grid-area: add;
@@ -76,8 +76,8 @@ body {
 #subtract {
     grid-area: subtract;
 }
-#number-0 {
-    grid-area: number-0;
+#digit-0 {
+    grid-area: digit-0;
 }
 #period {
     grid-area: period;
@@ -92,7 +92,7 @@ body {
     grid-area: equals;
 }
 
-.numbers {
+.digits {
     background-color: lightslategray;
 }
 
@@ -100,7 +100,7 @@ body {
     background-color: #FF8C00;
 }
 
-.buttons, .extra {
+.calculator-buttons, .extra {
     border-radius: 25px;
     font-size: 50px;
     text-align: center;

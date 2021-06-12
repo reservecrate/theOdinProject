@@ -15,53 +15,47 @@ const operate = {
 };
 
 // Elements
-const buttons = document.querySelectorAll('.buttons'); // Every single pressable button in the calculator
+const calculatorButtons = document.querySelectorAll('.calculator-buttons'); // Every single pressable button on the calculator (excluding the divs with the class .extra)
 const operators = document.querySelectorAll('.operators'); // The operators
 const extra = document.querySelectorAll('.extra'); // Extra buttons that are neither operands or operators
-const operations = document.querySelector('#operations'); // The panel that contains the contains the operations (what the user types)
+const operations = document.querySelector('#operations'); // The panel that contains the displays the ongoing operation
 operations.textContent = '';
-const result = document.querySelector('#result'); // The panel that will contain the results of the operation/operations
+const result = document.querySelector('#result'); // The panel that will contain the result of an operation (one operation at a time, as per TOP's instructions to not evaluate more than one operation at a time)
 const clear = document.querySelector('#clear'); // The clear element, which will reset everything upon being clicked on
 const equals = document.querySelector('#equals'); // The equals sign element, which is supposed to return the result after being pressed on
-const operands = document.querySelectorAll('.numbers'); // The number buttons in the calculator, aka the operands
-operands.textContent = '';
-let operandsArr = [];
-let operatorsArr = [];
-let resultNum = 0;
+const digits = document.querySelectorAll('.digits'); // The digit buttons in the calculator, which will also be the operands
+let operandsArr = []; // an array holding the operands
+// let operandsSubArr = []; // a sub array to contain temporary data that will be later pushed to operandsArr (the sub array will be cleaned after each push)
+let operatorsArr = []; // an array holding the textContents of the pressed operators
+let resultNum = 0; // the result of a single operation (as per TOP's instructions to not evaluate more than one operation at a time)
 
 // Event listeners
-buttons.forEach(button => { // Change the color of the pressed buttons, and add the corresponding button's text content to the #operations div
-    button.addEventListener('click', () => {
-        button.classList.toggle('clicked');
-        operations.textContent += button.textContent;
+calculatorButtons.forEach(calculatorButton => { // Change the color of the pressed buttons, and add the corresponding button's text content to the #operations div
+    calculatorButton.addEventListener('click', () => {
+        calculatorButton.classList.toggle('clicked');
+        operations.textContent += calculatorButton.textContent; // add the pressed calculator buttons to operations.textContent to display the operation to the user
     })
 })
 
-operands.forEach(operand => { // Add the pressed numbers (operands) to operands.textContent
-    operand.addEventListener('click', () => {
-        operands.textContent += operand.textContent;
+digits.forEach(digit => { // Add the pressed digits to operandsStr
+    digit.addEventListener('click', () => {
+        operandsArr.push(digit.textContent);
     })
 })
 
-operators.forEach(operator => { // Add the pressed operators to operatorsArr, add a space to operands.textContent to serve as a delimiter when defining the operandsArr
+operators.forEach(operator => { // Add the pressed operators to operatorsArr, add a space to operands.textContent to serve as a delimiter when creating operandsArr
     operator.addEventListener('click', () => {
-        if (operandsArr.length < 1) {
-            operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
-            operands.textContent += ' '; // add a space to operands.textContent to serve as a delimiter
-            operandsArr.shift();
-            operandsArr.push(...operands.textContent.split(' ').filter(elem => elem !== '').map(num => +num)); // create a sub array of the operands, splitting at spaces, getting rid of any empty strings, and then finally transforming all the strings to their number counterparts
-        }
-        else if (operandsArr.length >= 1) {
-            operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
-            operands.textContent += ' '; // add a space to operands.textContent to serve as a delimiter
-            operandsArr.push(...operands.textContent.split(' ').filter(elem => elem !== '').map(num => +num)); // split the string at spaces, get rid of any empty strings,transform all the strings to their number counterparts, and then push the result to operandsArr
-            operandsArr.splice(0, 1);
-            resultNum = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to resultNum to store it for later use
+        operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
+        operandsArr.push(' '); // add a space to operandsStr to serve as a delimiter
+        console.log(operandsArr);
+        if (operandsArr.length >= 2) {
+            operandsArr.pop();
+            operandsArr = [...operandsArr.join('').trim().split(' ').map(elem => +elem)];
+            resultNum = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to resultNum
             result.textContent = resultNum; // assign the result of the operation to result.textContent to display it to the user
             operations.textContent = resultNum + '+';
+            operatorsArr = [];
             operandsArr = [];
-            operatorsArr.shift();
-            operands.textContent = '';
             operandsArr.push(resultNum);
         }
     })
