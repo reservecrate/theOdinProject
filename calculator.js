@@ -26,9 +26,8 @@ const equals = document.querySelector('#equals'); // The equals sign element, wh
 const operands = document.querySelectorAll('.numbers'); // The number buttons in the calculator, aka the operands
 operands.textContent = '';
 let operandsArr = [];
-let operandsSubArr = [];
 let operatorsArr = [];
-let resultNum;
+let resultNum = 0;
 
 // Event listeners
 buttons.forEach(button => { // Change the color of the pressed buttons, and add the corresponding button's text content to the #operations div
@@ -46,24 +45,30 @@ operands.forEach(operand => { // Add the pressed numbers (operands) to operands.
 
 operators.forEach(operator => { // Add the pressed operators to operatorsArr, add a space to operands.textContent to serve as a delimiter when defining the operandsArr
     operator.addEventListener('click', () => {
-        operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
-        operands.textContent += ' '; // add a space to operands.textContent to serve as a delimiter
-        operandsSubArr = operands.textContent.split(' ').map(num => +num);
-        operandsArr.push(...operandsSubArr); // create the operandsArr array using the space as a delimiter
-        resultNum = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to resultNum to store it for later use
-        result.textContent = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to result.textContent to display it to the user
-        if (operandsArr.length >= 2) {
-            operatorsArr.pop();
-            operandsArr = [];
-            operands.textContent = '';
+        if (operandsArr.length < 1) {
+            operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
+            operands.textContent += ' '; // add a space to operands.textContent to serve as a delimiter
+            operandsArr.shift();
+            operandsArr.push(...operands.textContent.split(' ').filter(elem => elem !== '').map(num => +num)); // create a sub array of the operands, splitting at spaces, getting rid of any empty strings, and then finally transforming all the strings to their number counterparts
         }
-        operandsArr.push(resultNum);
-        operations.textContent = result.textContent;
+        else if (operandsArr.length >= 1) {
+            operatorsArr.push(operator.textContent); // push the pressed operator to the operatorsArr
+            operands.textContent += ' '; // add a space to operands.textContent to serve as a delimiter
+            operandsArr.push(...operands.textContent.split(' ').filter(elem => elem !== '').map(num => +num)); // split the string at spaces, get rid of any empty strings,transform all the strings to their number counterparts, and then push the result to operandsArr
+            operandsArr.splice(0, 1);
+            resultNum = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to resultNum to store it for later use
+            result.textContent = resultNum; // assign the result of the operation to result.textContent to display it to the user
+            operations.textContent = resultNum + '+';
+            operandsArr = [];
+            operatorsArr.shift();
+            operands.textContent = '';
+            operandsArr.push(resultNum);
+        }
     })
 })
 
 equals.addEventListener('click', () => { // Displays the result of the operation on click
-    operandsSubArr = operands.textContent.split(' ').map(num => +num);
+    /* operandsSubArr = operands.textContent.split(' ').map(num => +num);
     operandsArr.push(...operandsSubArr); // create the operandsArr array using the space as a delimiter
     resultNum = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to resultNum to store it for later use
     result.textContent = operate[operatorsArr[0]](operandsArr[0], operandsArr[1]); // assign the result of the operation to result.textContent to display it to the user
@@ -72,7 +77,7 @@ equals.addEventListener('click', () => { // Displays the result of the operation
         operandsArr = [];
         operands.textContent = '';
     }
-    operandsArr.push(resultNum);
+    operandsArr.push(resultNum); */
 })
 
 clear.addEventListener('click', () => { // Reloads the page on click
